@@ -9,11 +9,11 @@ test = function (a, b) {
 }
 console.log("test = " + test);
 
-function calculate(a, b, c) {
+function calculateTemp(a, b, c) {
     return (a * b) + c;
 }
 
-console.log("calculate() = " + calculate(2, 3, 1));
-console.log("calculate() = " + calculate("2", "3", "1"));
+console.log("calculate() = " + calculateTemp(2, 3, 1));
+console.log("calculate() = " + calculateTemp("2", "3", "1"));
 
 
