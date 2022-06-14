@@ -33,6 +33,10 @@ function testArguments(...args: string[] | number[]) {
 testArguments("1");
 testArguments(10, 20);
 
+//
+// Function callbacks
+//
+
 function myCallback(text: string): void {
     console.log(`myCallback called with ${text}`);
 }
@@ -46,7 +50,7 @@ function withCallbackArg(
 }
 
 withCallbackArg("initial text", myCallback);
-// withCallbackArg("text", "this is not a function");
+  // withCallbackArg("text", "this is not a function");
 
 //
 // function overrides
@@ -60,7 +64,7 @@ function add(a: any, b: any) {
 
 add("first", "second");
 add(1, 2);
-// add(true, false);
+  // add(true, false);
 
 
 //
@@ -80,8 +84,8 @@ withLiteral("two");
 withLiteral("three");
 withLiteral(65535);
 
-// withLiteral("four");
-// withLiteral(2);
+  // withLiteral("four");
+  // withLiteral(2);
 
 
 

@@ -2,30 +2,25 @@
 //
 // The any type
 //
-
-// var item1: any = { id: 1, name: "item1" }
-// item1 = { id: 2 };
+var item1: any = { id: 1, name: "item1" }
+item1 = { id: 2 };
 
 //
 // Explicit casting
 //
-
-// var item1 = <any>{ id: 1, name: "item1" }
+var item1 = <any>{ id: 1, name: "item1" }
 var item1 = { id: 1, name: "item1" } as any;
 item1 = { id: 2 };
-
-
 
 //
 // The let keyword
 //
-
-// var index: number = 0;
 let index: number = 0;
+  // var index: number = 0;
 
 if (index == 0) {
-    // var index: number = 2;
     let index: number = 2;
+      // var index: number = 2;
     console.log(`index = ${index}`);
 }
 
@@ -34,15 +29,12 @@ console.log(`index = ${index}`);
 //
 // const values
 //
-
 const constValue = "this should not be changed";
-// constValue = "updated";
-
+  // constValue = "updated";
 
 //
 // Union types
 //
-
 function printObject(obj: string | number) {
     console.log(`obj = ${obj}`);
 }
@@ -50,10 +42,9 @@ function printObject(obj: string | number) {
 printObject(1);
 printObject("string value");
 
-//
-// type guards
-//
-
+// //
+// // type guards
+// //
 function addWithUnion(
     arg1: string | number,
     arg2: string | number
@@ -86,7 +77,6 @@ console.log(`  1 , "2" = ${addWithTypeGuard(1, "2")}`);
 //
 // type aliases
 // 
-
 type StringOrNumber = string | number;
 
 function addWithTypeAlias(
@@ -99,7 +89,6 @@ function addWithTypeAlias(
 // 
 // enums
 //
-
 enum DoorState {
     Open,
     Closed
@@ -146,14 +135,7 @@ const enum DoorStateConst {
     Closed = 20
 }
 
-console.log(`const Closed = ${DoorStateConst.Open}`);
-
-
-
-
-
-
-
+console.log(`const Open = ${DoorStateConst.Open}`);
 
 
 // 
@@ -165,7 +147,7 @@ let array = ["123", "456", "789"];
 delete array[0];
 
 for (let i = 0; i < array.length; i++) {
-    // console.log(`array[${i}] = ${array[i]}`);
+    console.log(`array[${i}] = ${array[i]}`);
     checkAndPrintElement(array[i]);
 }
 
@@ -175,9 +157,6 @@ function checkAndPrintElement(arrElement: string | undefined) {
     else
         console.log(`valid array element : ${arrElement}`);
 }
-
-
-
 
 //
 // Null
@@ -210,11 +189,6 @@ let objectA = {
     }
 }
 
-// function printNestedObject(obj) {
-//     console.log("obj.nestedProperty.name = "
-//         + obj.nestedProperty.name);
-// }
-
 function printNestedObject(obj: any) {
     if (obj != undefined
         && obj.nestedProperty != undefined
@@ -235,10 +209,6 @@ printNestedObject({
         name: "nestedPropertyName"
     }
 });
-
-// 
-// Optional chaining : using the syntax
-//
 
 function printNestedOptionalChain(obj: any) {
     if (obj?.nestedProperty?.name) {
@@ -262,7 +232,6 @@ printNestedOptionalChain({
         name: "nestedPropertyName"
     }
 });
-
 
 // 
 // Nullish coalescing
@@ -288,7 +257,7 @@ function testNullOperands(a: number, b: number | null | undefined) {
 // definite assignment
 //
 
-// console.log(`lValue = ${lValue}`);
+  // console.log(`lValue = ${lValue}`);
 var lValue = 2;
 
 let globalString!: string;
@@ -296,8 +265,7 @@ let globalString!: string;
 setGlobalString("this string is set");
 
 console.log(`globalString = ${globalString}`);
-// console.log(`globalString = ${globalString!}`);
-
+  // console.log(`globalString = ${globalString!}`);
 
 function setGlobalString(value: string) {
     globalString = value;
@@ -320,8 +288,7 @@ function printObjectType(a: object) {
 }
 
 printObjectType(structuredObject);
-
-// printObjectType("this is a string");
+  // printObjectType("this is a string");
 
 // 
 // unknown
@@ -334,7 +301,7 @@ aNumber = a;
 let u: unknown = "an unknown";
 u = 1;
 let aNumber2: number;
-// aNumber2 = u;
+  // aNumber2 = u;
 aNumber2 = <number>u;
 
 console.log(`aString : ${a * 2}`);
@@ -345,11 +312,11 @@ console.log(`aString : ${a * 2}`);
 
 function alwaysThrows(): never {
     throw new Error("this will always throw");
-    // return -1;
+      // return -1;
 }
 
 // 
-// never in practice
+// never and switch
 //
 
 enum AnEnum {
@@ -365,8 +332,6 @@ function getEnumValue(enumValue: AnEnum): string {
     let returnValue: never = enumValue;
     return returnValue;
 }
-
-
 
 //
 // object spread
@@ -426,8 +391,7 @@ console.log(`objArray3 = ${JSON.stringify(objArray3, null, 4)}`);
 
 let tuple1: [string, boolean];
 tuple1 = ["test", true];
-
-// tuple1 = ["test"];
+  // tuple1 = ["test"];
 
 //
 // tuple destructuring
@@ -435,7 +399,7 @@ tuple1 = ["test", true];
 
 console.log(`tuple1[0] : ${tuple1[0]}`);
 console.log(`tuple1[1] : ${tuple1[1]}`);
-// console.log(`tuple1[2] : ${tuple1[2]}`);
+  // console.log(`tuple1[2] : ${tuple1[2]}`);
 
 let [tupleString, tupleBoolean] = tuple1;
 console.log(`tupleString = ${tupleString}`);
