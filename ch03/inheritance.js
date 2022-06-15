@@ -1,171 +1,113 @@
+"use strict";
 //
 // interface inheritance
 //
-
-interface IBase {
-    id: number;
+class IdNameClass {
+    constructor() {
+        this.id = 0;
+        this.name = "nameString";
+    }
 }
-
-interface IDerivedFromBase extends IBase {
-    name: string;
-}
-
-class IdNameClass implements IDerivedFromBase {
-    id: number = 0;
-    name: string = "nameString";
-}
-
-interface IBaseStringOrNumber {
-    id: string | number;
-}
-
-interface IDerivedFromBaseNumber
-    extends IBaseStringOrNumber {
-    id: number;
-}
-
-interface IMultiple
-    extends IDerivedFromBase,
-    IDerivedFromBaseNumber {
-    description: string;
-}
-
-let multipleObject: IMultiple = {
+let multipleObject = {
     id: 1,
     name: "myName",
     description: "myDescription"
 };
-
 //
 // class inheritance
 //
-
-
-class BaseClass implements IBase {
-    id: number = 0;
+class BaseClass {
+    constructor() {
+        this.id = 0;
+    }
 }
-
-class DerivedFromBaseClass
-    extends BaseClass
-    implements IDerivedFromBase {
-    name: string = "nameString";
+class DerivedFromBaseClass extends BaseClass {
+    constructor() {
+        super(...arguments);
+        this.name = "nameString";
+    }
 }
-
-//
-// implementing multiple interfaces
-//
-
-interface IFirstInterface {
-    id: number;
+class MultipleInterfaces {
+    constructor() {
+        this.id = 0;
+        this.name = "nameString";
+    }
 }
-
-interface ISecondInterface {
-    name: string;
-}
-
-class MultipleInterfaces
-    implements IFirstInterface, ISecondInterface {
-    id: number = 0;
-    name: string = "nameString";
-}
-
 // 
 // the super keyword 
 //
-
 class BaseClassWithCtor {
-    private id: number;
-    constructor(id: number) {
+    constructor(id) {
         this.id = id;
     }
 }
-
 class DerivedClassWithCtor extends BaseClassWithCtor {
-    private name: string;
-    constructor(id: number, name: string) {
+    constructor(id, name) {
         super(id);
         this.name = name;
     }
 }
-
 let derivedClassInstance = new DerivedClassWithCtor(1, "test");
-
 //
 // function overriding 
 //
-
 class BaseClassWithFn {
-    print(text: string) {
-        console.log(`BaseClassWithFn.print() : ${text}`)
+    print(text) {
+        console.log(`BaseClassWithFn.print() : ${text}`);
     }
 }
-
 class DerivedClassFnOverride extends BaseClassWithFn {
-    print(text: string) {
+    print(text) {
         console.log(`DerivedClassFnOverride.print(${text})`);
     }
 }
-
 let derivedClassFnOverride = new DerivedClassFnOverride();
 derivedClassFnOverride.print("test");
-
 class DerivedClassFnCallthrough extends BaseClassWithFn {
-    print(text: string) {
+    print(text) {
         super.print(`from DerivedClassFncallthrough : ${text}`);
     }
 }
-
 let derivedCallthrough = new DerivedClassFnCallthrough();
 derivedCallthrough.print("text");
-
 //
 // protected
 //
-
 class BaseClassProtected {
-    protected id: number;
-    private name: string = "";
-    constructor(id: number) {
+    constructor(id) {
+        this.name = "";
         this.id = id;
     }
 }
-
 class AccessProtected extends BaseClassProtected {
-    constructor(id: number) {
+    constructor(id) {
         super(id);
         console.log(`base.id = ${this.id}`);
         // console.log(`base.name = ${this.name}`);
     }
 }
-
 let accessProtected = new AccessProtected(1);
 // accessProtected.id = 1;
 // accessProtected.name = "test";
-
-
-
 //
 // abstract classes
 //
-
-abstract class EmployeeBase {
-    public id: number;
-    public name: string;
-    abstract doWork(): void;
-    constructor(id: number, name: string) {
+class EmployeeBase {
+    constructor(id, name) {
         this.id = id;
         this.name = name;
     }
 }
-
 class OfficeWorker extends EmployeeBase {
     doWork() {
         console.log(`${this.name} : doing work`);
     }
 }
-
 class OfficeManager extends OfficeWorker {
-    public employees: OfficeWorker[] = [];
+    constructor() {
+        super(...arguments);
+        this.employees = [];
+    }
     manageEmployees() {
         super.doWork();
         for (let employee of this.employees) {
@@ -173,40 +115,33 @@ class OfficeManager extends OfficeWorker {
         }
     }
 }
-
 let joeBlogg = new OfficeWorker(1, "Joe");
-let jillBlogg = new OfficeWorker(2, "Jill")
+let jillBlogg = new OfficeWorker(2, "Jill");
 let jackManager = new OfficeManager(3, "Jack");
-
 jackManager.employees.push(joeBlogg);
 jackManager.employees.push(jillBlogg);
-
 jackManager.manageEmployees();
-
 //
 // instanceof
 //
-
-class A { }
-class BfromA extends A { }
-class CfromA extends A { }
-class DfromC extends CfromA { }
-
+class A {
+}
+class BfromA extends A {
+}
+class CfromA extends A {
+}
+class DfromC extends CfromA {
+}
 console.log(`A instance of A : 
     ${new A() instanceof A}`);
-
 console.log(`BfromA instance of A : 
     ${new BfromA() instanceof A}`);
-
 console.log(`BfromA instance of BfromA : 
     ${new BfromA() instanceof BfromA}`);
-
 console.log(`CfromA instance of BfromA : 
     ${new CfromA() instanceof BfromA}`);
-
 console.log(`DfromC instance of CfromA : 
     ${new DfromC() instanceof CfromA}`);
-
 console.log(`DfromC instance of A : 
     ${new DfromC() instanceof A}`);
-
+//# sourceMappingURL=inheritance.js.map

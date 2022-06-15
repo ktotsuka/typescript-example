@@ -11,7 +11,7 @@ interface IIdName {
 
 let idObject: IIdName = {
     id: 2,
-    name: "this is a name"
+    name: "this is a name",
 }
 
 interface IOptional {
@@ -32,14 +32,13 @@ let optionalIdName: IOptional = {
 // weak types
 //
 
-
 interface IWeakType {
     id?: number,
     name?: string
 }
 
 let weakTypeNoOverlap: IWeakType = {
-    // description: "a description",
+      //description: "a description",
     name: "a name"
 }
 
@@ -56,7 +55,6 @@ interface IDescrValue {
     descr: string;
     value: number;
 }
-
 
 function printNameOrValue(
     obj: IIdName | IDescrValue): void {
@@ -101,9 +99,6 @@ getProperty("name",
     { id: 2, name: "secondName" }
 );
 
-// generates error:
-// 
-// getProperty("telephone",
-//     { id: 3, name: "thirdName" }
-// );
-
+  // getProperty("telephone",
+  //     { id: 3, name: "thirdName" }
+  // );

@@ -1,209 +1,162 @@
+"use strict";
 //
 // classes
 //
-
 class SimpleClass {
-    id: number | undefined;
-    print(): void {
+    print() {
         console.log(`SimpleClass.id = ${this.id}`);
     }
 }
-
 let mySimpleClass = new SimpleClass();
 mySimpleClass.id = 2020;
 mySimpleClass.print();
-
 //
 // implmenting interfaces
 //
-
-class ClassA implements IPrint {
-    print(): void {
-        console.log(`ClassA.print() called.`)
-    };
+class ClassA {
+    print() {
+        console.log(`ClassA.print() called.`);
+    }
+    ;
 }
-
-class ClassB implements IPrint {
-    print(): void {
-        console.log(`ClassB.print() called.`)
-    };
+class ClassB {
+    print() {
+        console.log(`ClassB.print() called.`);
+    }
+    ;
 }
-
-interface IPrint {
-    print(): void;
-}
-
-function printClass(a: IPrint) {
+function printClass(a) {
     a.print();
 }
-
 let classA = new ClassA();
 let classB = new ClassB();
-
 printClass(classA);
 printClass(classB);
-
 class ClassC {
-    print(): void {
-        console.log(`ClassC.print() called.`)
-    };
+    print() {
+        console.log(`ClassC.print() called.`);
+    }
+    ;
 }
-
 let classC = new ClassC();
 printClass(classC);
-
 //
 // class constructors
 //
-
 class ClassWithConstructor {
-    id: number;
-    constructor(id: number) {
+    constructor(id) {
         this.id = id;
     }
 }
-
 let classWithConstructor = new ClassWithConstructor(10);
-
 console.log(`classWithConstructor = 
     ${JSON.stringify(classWithConstructor)}`);
-
 //
 // class modifiers
 //
-
 class ClassWithPublicProperty {
-    public id: number | undefined;
 }
-
 let publicAccess = new ClassWithPublicProperty();
 publicAccess.id = 10;
-
 class ClassWithPrivateProperty {
-    private id: number;
-    constructor(id: number) {
+    constructor(id) {
         this.id = id;
     }
 }
-
 let privateAccess = new ClassWithPrivateProperty(10);
-  // privateAccess.id = 20;
+// privateAccess.id = 20;
 privateAccess["id"] = 20;
-
-
 //
 // ES6 private fields
 //
-
 class ClassWithCtorMods {
-    constructor(public id: number, private name: string) {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
     }
 }
-
 let myClassMod = new ClassWithCtorMods(1, "test");
 console.log(`myClassMod.id = ${myClassMod.id}`);
-  // console.log(`myClassMod.name = ${myClassMod.name}`);
-
+// console.log(`myClassMod.name = ${myClassMod.name}`);
 //
 // readonly
 //
-
 class ClassWithReadonly {
-    readonly name: string = "test";
-    constructor(name: string) {
+    constructor(name) {
+        this.name = "test";
         this.name = name;
     }
-    // setNameValue(name: string) {
-    //     this.name = name;
-    // }
 }
-
 //
 // Get and set
 //
-
 class ClassWithAccessors {
-    private _id: number = 0;
-    get id(): number {
+    constructor() {
+        this._id = 0;
+    }
+    get id() {
         console.log(`get id property`);
         return this._id;
     }
-    set id(value: number) {
+    set id(value) {
         console.log(`set id property`);
         this._id = value;
     }
 }
-
 let classWithAccessors = new ClassWithAccessors();
 classWithAccessors.id = 10;
 console.log(`classWithAccessors.id = ${classWithAccessors.id}`);
-
 // 
 // static functions
 //
-
 class StaticFunction {
     static printTwo() {
-        console.log(`2`)
+        console.log(`2`);
     }
 }
-
 StaticFunction.printTwo();
-
 //
 // static properties
 //
-
 class StaticProperty {
-    static count = 0;
     updateCount() {
         StaticProperty.count++;
     }
 }
-
+StaticProperty.count = 0;
 let firstInstance = new StaticProperty();
 let secondInstance = new StaticProperty();
-
 firstInstance.updateCount();
 console.log(`StaticProperty.count = ${StaticProperty.count}`);
-
 secondInstance.updateCount();
 console.log(`StaticProperty.count = ${StaticProperty.count}`);
-
-
 //
 // namespaces
 //
-
-namespace FirstNameSpace {
-    export class NameSpaceClass { }
-    class NotExported { }
-}
-
+var FirstNameSpace;
+(function (FirstNameSpace) {
+    class NameSpaceClass {
+    }
+    FirstNameSpace.NameSpaceClass = NameSpaceClass;
+    class NotExported {
+    }
+})(FirstNameSpace || (FirstNameSpace = {}));
 let nameSpaceClass = new FirstNameSpace.NameSpaceClass();
-  // let notExported = new FirstNameSpace.NotExported();
-
-
+// let notExported = new FirstNameSpace.NotExported();
 //
 // interfaces extending classes
 //
-
 class BaseInterfaceClass {
-    id: number = 0;
+    constructor() {
+        this.id = 0;
+    }
     print() {
         console.log(`this.id = ${this.id}`);
     }
 }
-
-interface IBaseInterfaceClassExt
-    extends BaseInterfaceClass {
-    setId(_id: number): void;
-}
-
-class ImplementsExt extends BaseInterfaceClass
-    implements IBaseInterfaceClassExt {
-    setId(id: number): void {
+class ImplementsExt extends BaseInterfaceClass {
+    setId(id) {
         this.id = id;
     }
 }
-
+//# sourceMappingURL=classes.js.map
