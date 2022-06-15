@@ -10,7 +10,7 @@ printGeneric(() => { });
 printGeneric({ id: 1 });
 
 printGeneric<string>("test");
-// printGeneric<string>(1);
+  // printGeneric<string>(1);
 
 //
 // multiple generic types
@@ -27,24 +27,6 @@ usingTwoTypes("first", "second");
 //
 // constraining the type of T
 //
-
-interface IName {
-    name: string;
-    print(): void;
-}
-interface INameDescr extends IName {
-    descr: String;
-}
-
-class Printer<T extends INameDescr> {
-    print(items: Array<T>) {
-        for (let item of items) {
-            console.log(`array item : ${item.print}`)
-        }
-    }
-}
-
-
 
 class Concatenator<T extends Array<string> | Array<number>> {
     public concatenateArray(items: T): string {
@@ -69,9 +51,9 @@ concatResult = concator.concatenateArray([
 ]);
 console.log(`concatResult = ${concatResult}`);
 
-// concatResult = concator.concatenateArray([
-//     true, false, true
-// ]);
+  // concatResult = concator.concatenateArray([
+  //     true, false, true
+  // ]);
 
 //
 // using the type T
@@ -90,20 +72,18 @@ interface IPrintName {
 function useT<T extends IPrintId | IPrintName>(item: T)
     : void {
     item.print();
-    // item.id = 1; // error : id is not common
-    // item.name = "test"; // error : name is not common
+      // item.id = 1; // error : id is not common
+      // item.name = "test"; // error : name is not common
 }
 
 //
 // generic constraints
 //
 
-
-
 function printProperty<T, K extends keyof T>
     (object: T, key: K) {
     let propertyValue = object[key];
-    console.log(`object[${key}] = ${propertyValue}`);
+    console.log(`object[${String(key)}] = ${propertyValue}`);
 }
 
 let obj1 = {
@@ -114,7 +94,7 @@ let obj1 = {
 
 printProperty(obj1, "id");
 printProperty(obj1, "name");
-// printProperty(obj1, "surname");
+  // printProperty(obj1, "surname");
 
 printProperty(obj1, "print");
 // obj1.print();
@@ -122,7 +102,6 @@ printProperty(obj1, "print");
 // 
 // generic interfaces
 //
-
 
 interface IPrint {
     print(): void;
@@ -156,10 +135,10 @@ class ClassA {
 
 class ClassB { }
 
-// function createClassInstance<T>
-//     (arg1: T): T {
-//     return new arg1(); // error : see below
-// }
+  // function createClassInstance<T>
+  //     (arg1: T): T {
+  //     return new arg1(); // error : see below
+  // }
 
 function createClassInstance<T>
     (arg1: { new(): T }): T {

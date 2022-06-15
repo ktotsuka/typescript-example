@@ -20,8 +20,7 @@ let allOptional: WeakInterface<IAbRequired> = {}
 let readonlyVar: Readonly<IAbRequired> = {
     a: 1, b: "test"
 }
-
-// readonlyVar.a = 1;
+  // readonlyVar.a = 1;
 
 // 
 // Pick
@@ -63,7 +62,7 @@ function logNumberOrString<T>(input: NumberOrString<T>) {
 
 logNumberOrString<number>(1);
 logNumberOrString<string>("test");
-// logNumberOrString<boolean>(true);
+  // logNumberOrString<boolean>(true);
 logNumberOrString<boolean>("boolean does not extend number");
 
 //
@@ -161,7 +160,6 @@ function testInferredFromFnParam<T>(
 testInferredFromFnParam<(a: number) => void>(1);
 testInferredFromFnParam<(a: string) => void>("test");
 
-
 type inferredFromFnReturnType<T> =
     T extends (a: string) => infer U ? U : never;
 
@@ -198,7 +196,6 @@ type StringOrNumber = Extract<
     string | number>;
 
 let stringValue: StringOrNumber = "test";
-
 
 // nonnullable
 type NotNullOrUndef = NonNullable<number | undefined | null>;
