@@ -97,16 +97,14 @@ console.log(`classInstance.testProperty =
     ${(<any>classInstance).testProperty}`);
 
 
+
 // 
 // property decorators
 // 
 
 function propertyDec(target: any, propertyName: string) {
-    // console.log(`target : ${target}`);
-    // console.log(`target.constructor : ${target.constructor}`);
-
     if (typeof (target) === 'function') {
-        console.log(`class name : ${target.name}`);
+        console.log(`class name (function) : ${target.name}`);
     } else {
         console.log(`class name : `
             + `${target.constructor.name}`);
@@ -254,6 +252,3 @@ class ClassWithReflectMetaData {
         return 1000;
     }
 }
-
-
-
