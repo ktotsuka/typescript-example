@@ -20,7 +20,7 @@ async function callDelayedPromise() {
     console.log(`3. after calling delayedPromise`)
 }
 
-// callDelayedPromise();
+callDelayedPromise();
 
 
 //
@@ -50,7 +50,7 @@ async function callErrorPromise() {
     }
 }
 
-// callErrorPromise();
+callErrorPromise();
 
 //
 // await values

@@ -1,5 +1,3 @@
-
-
 //
 // callback sytax
 // 
@@ -105,9 +103,9 @@ function errorPromise(): Promise<void> {
     )
 }
 
-// console.log(`1. calling errorPromise()`);
-// errorPromise().then(() => { })
-//     .catch(() => { console.log(`3. caught an error`) });
+console.log(`1. calling errorPromise()`);
+errorPromise().then(() => { })
+    .catch(() => { console.log(`3. caught an error`) });
 
 
 //
@@ -168,7 +166,6 @@ interface IDataRow {
     surname: string;
 }
 
-
 function complexPromise(
     connection: IConnection,
     accessKey: string
@@ -184,7 +181,6 @@ function complexPromise(
             // retrieve data, or
             // reject with an error 
         }
-
     );
 }
 
@@ -194,7 +190,7 @@ complexPromise({
 }, "abcd").then((rows: IDataRow[]) => {
     // do something with rows
 })
-    .catch((error: IError) => {
-        // do something with error
-    });
+.catch((error: IError) => {
+    // do something with error
+});
 
