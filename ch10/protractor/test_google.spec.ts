@@ -1,3 +1,4 @@
+// Get an errror about undefined browser.driver...
 import { browser, By, Key } from 'protractor';
 
 describe("simple protractor test", () => {

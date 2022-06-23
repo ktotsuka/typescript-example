@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import $ from "jquery";
 import { JSDOM } from "jsdom";
 
@@ -18,9 +22,6 @@ describe("html_tests", () => {
 
         expect(htmlElement.html()).toContain("Hello World");
     });
-
-    // npm install jsdom ?
-    // import JSDOM from jsdom
 
     const htmlWithClickEvent = `
         <body>
