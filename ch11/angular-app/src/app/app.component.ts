@@ -4,29 +4,30 @@ import { BroadcastService, EventKeys } from './services/broadcast.service';
 import * as _ from "underscore";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'angular-app';
+  title = 'angular-app';
+  @ViewChild("sidenav") sidenav: MatSidenav | null = null;
 
-    @ViewChild("sidenav") sidenav: MatSidenav | null = null;
+  constructor(broadCastService: BroadcastService) {
+      _.bindAll(this, "onLoginClicked");
+      broadCastService.on(EventKeys.LOGIN_BUTTON_CLICKED)
+          .subscribe(this.onLoginClicked);
+      broadCastService.on(EventKeys.USER_LOGIN_EVENT)
+          .subscribe(this.onLoginEvent);
+  }
+  
+  onLoginClicked(event: string) {
+      console.log(`AppComponent received : ${event}`)
 
-    constructor(broadCastService: BroadcastService) {
-        _.bindAll(this, "onLoginClicked", "onLoginEvent");
-        broadCastService.on(EventKeys.LOGIN_BUTTON_CLICKED)
-            .subscribe(this.onLoginClicked);
-        broadCastService.on(EventKeys.USER_LOGIN_EVENT)
-            .subscribe(this.onLoginEvent);
-    }
+      this.sidenav?.open();
+  }
 
-    onLoginClicked(event: string) {
-        console.log(`AppComponent received : ${event}`);
-
-        this.sidenav?.open();
-    }
-    onLoginEvent() {
-        this.sidenav?.close();
-    }
+  onLoginEvent() {
+    console.log(`onLoginEvent called.  Closing`)
+    this.sidenav?.close();
+  }
 }
