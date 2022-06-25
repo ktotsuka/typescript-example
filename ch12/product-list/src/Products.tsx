@@ -17,7 +17,6 @@ export interface ISpecs {
 }
 
 export class Collection {
-    handleItemClicked(id: number) { }
     items: IProduct[] = [
         {
             id: 1,
@@ -79,5 +78,7 @@ export class Collection {
         }
 
     ]
+    handleItemClicked(id: number) { }
+
 
 }

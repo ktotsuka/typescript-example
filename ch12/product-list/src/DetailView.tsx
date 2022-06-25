@@ -6,7 +6,6 @@ import { IProduct } from "./Products";
 import "./DetailView.css"
 
 export interface IDetailsProps {
-    // id: number = 0;
     open: boolean;
     product: IProduct | null;
     handleClose(): void;
@@ -28,8 +27,6 @@ export class DetailView extends React.Component<IDetailsProps, IDetailsState> {
     constructor(props: IDetailsProps) {
         super(props);
         this.handleClose = this.handleClose.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             noSwitches: 70
         }
@@ -57,7 +54,7 @@ export class DetailView extends React.Component<IDetailsProps, IDetailsState> {
                         <Paper className="details-paper-body">
                             <Grid container spacing={5}>
                                 <Grid item>
-                                    <img className="large-image" src={this.props.product?.image} />
+                                    <img className="large-image" alt="" src={this.props.product?.image} />
                                 </Grid>
                                 <Grid item xs container direction="column" justify="flex-start" align-items="stretch" >
                                     <Grid item >

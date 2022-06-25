@@ -3,7 +3,7 @@ import React from "react";
 import { ItemView } from "./ItemView";
 import { Collection } from "./Products";
 
-export class CollectionView
+export class CollectionView 
     extends React.Component<Collection> {
     constructor(props: Collection) {
         super(props)
