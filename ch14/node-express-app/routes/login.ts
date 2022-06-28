@@ -1,20 +1,19 @@
 import express from "express";
-import { ISessionData } from "./SessionData";
 
 let router = express.Router();
 
 router.get(`/login`,
     (
         req: express.Request,
-        res: express.Response
+        res: express.Response,
+        next: express.NextFunction
     ) => {
         res.render(`login`, {
             title: `Express Login`
         })
     });
 
-
-router.post(`/login`,
+    router.post(`/login`,
     (
         req: express.Request,
         res: express.Response,
@@ -32,7 +31,6 @@ router.post(`/login`,
                 errorMessage: `Please enter a username and password`
             })
         }
-
     });
 
 export { router };
