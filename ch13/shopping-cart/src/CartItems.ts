@@ -16,11 +16,6 @@ export interface ISpecs {
     price: string;
 }
 
-export interface ICartItemPostData {
-    productId: number;
-    amount: number;
-}
-
 export class CartCollection {
     items: IProduct[];
     constructor() {

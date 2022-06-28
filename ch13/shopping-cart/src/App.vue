@@ -20,12 +20,8 @@ export default class App extends Vue {
             cartItems: shoppingCartItems
         }
     }
-    handleBroadcastEvent(event: string) {
-        console.log(`VUE: App.handleBroadcastEvent : ${event}`);
-    }
 }
 </script>
 
 <style scoped>
 </style>
-
