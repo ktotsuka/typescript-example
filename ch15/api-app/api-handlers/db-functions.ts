@@ -1,8 +1,7 @@
 
 import * as AWS from 'aws-sdk';
 
-
-export const region = 'us-east-2';
+export const region = 'us-east-1';
 export const dynamoDbClient = createDynamoDbClient(region);
 
 export function createDynamoDbClient(regionName: string) {

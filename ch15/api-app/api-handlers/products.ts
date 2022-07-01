@@ -1,6 +1,3 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
-// let response;
 import {
     APIGatewayProxyEvent,
     APIGatewayProxyResult,
@@ -10,7 +7,8 @@ import {
 
 import { dynamoDbClient } from "./db-functions";
 import { handlePutItemError, handleScanError } from "./error-handlers";
-import { IProduct } from './product-data';
+import { loadProducts } from "./insert_products";
+
 import { getProduct, getProductScanParameters } from './product-helper';
 export const getHandler = async (
     event: APIGatewayProxyEvent,
@@ -37,9 +35,6 @@ export const getHandler = async (
         response = {
             'statusCode': 200,
             'body': JSON.stringify(outputArray),
-            'headers': {
-                "Access-Control-Allow-Origin": "*"
-            }
         }
     } catch (err) {
         console.log(err);
@@ -56,47 +51,37 @@ async function executeScan(dynamoDbClient: AWS.DynamoDB, scanInput: AWS.DynamoDB
         console.info('Scan successful.');
         // Handle scanOutput
         return scanOutput;
-    } catch (err) {
+    } catch (err: any) {
         handleScanError(err);
     }
 }
 
+export const postHandler = async (
+    event: APIGatewayProxyEvent, context: Context
+) => {
+    console.log("Kenji: in product postHandler");
 
-export const getSingleProductHandler = async (event: APIGatewayProxyEvent, context: Context) => {
     let response = {};
+    try {       
 
-    try {
+        await loadProducts();
 
-        let productId = (<any>event.pathParameters).productId;
-
-        console.log(`event.path : ${event.path}`);
-        console.log(`event.pathParameters.productId : ${(<any>event.pathParameters).productId}`);
-
-        // event.queryStringParameters = {"name":"test"}
-
-        let scanResults = await executeScan(
-            dynamoDbClient,
-            getProductScanParameters(productId)
-        );
-        let outputProduct = {};
-
-        if (scanResults?.Items) {
-            for (let item of scanResults?.Items) {
-                outputProduct = getProduct(item);
-            }
-        }
+        console.log("Kenji: successfully put item");
 
         response = {
             'statusCode': 200,
-            'body': JSON.stringify(outputProduct),
-            'headers': {
-                "Access-Control-Allow-Origin": "*"
-            }
+            'body': `Products created`
         }
-    } catch (err) {
+    } catch (err: any) {
+        console.log("Kenji: product post error");
+
         console.log(err);
-        return err;
+        // return err;
+        response = {
+            'statusCode': err.statusCode,
+            'body': `product post error`,
+        }
     }
 
-    return response
+    return response;
 };
