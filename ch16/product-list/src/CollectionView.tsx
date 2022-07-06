@@ -3,9 +3,15 @@ import React from "react";
 import { ItemView } from "./ItemView";
 import { Collection } from "./Products";
 
-export class CollectionView
-    extends React.Component<Collection> {
-    constructor(props: Collection) {
+interface ICollectionViewProps {
+    collections: Collection,
+    handleItemClicked: (param: number) => void,
+    children: React.ReactNode,
+}
+
+export class CollectionView 
+    extends React.Component<ICollectionViewProps> {
+    constructor(props: ICollectionViewProps) {
         super(props)
         this.handleItemClicked =
             this.handleItemClicked.bind(this);
@@ -17,7 +23,7 @@ export class CollectionView
     }
 
     render() {
-        let items = this.props.items.map((item) => {
+        let items = this.props.collections.items.map((item) => {
             return (
                 <ItemView key={item.id} {...item}
                     onItemClicked={this.handleItemClicked} />

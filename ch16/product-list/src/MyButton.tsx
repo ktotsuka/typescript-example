@@ -4,10 +4,10 @@ import React from "react";
 export interface IMyButtonProps {
     buttonName: string;
     handleButtonClick(): void;
+    children: React.ReactNode;
 }
 
-export class MyButton extends
-    React.Component<IMyButtonProps> {
+export class MyButton extends React.Component<IMyButtonProps> {   
     constructor(props: IMyButtonProps) {
         super(props);
         this.onButtonClicked =
@@ -15,8 +15,7 @@ export class MyButton extends
     }
     render() {
         return (
-            <Button color="primary"
-                onClick={this.onButtonClicked}>
+            <Button color="primary" onClick={this.onButtonClicked}>
                 {this.props.buttonName}
             </Button>
         )

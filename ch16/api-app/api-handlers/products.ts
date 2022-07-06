@@ -1,6 +1,3 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
-// let response;
 import {
     APIGatewayProxyEvent,
     APIGatewayProxyResult,
@@ -10,7 +7,8 @@ import {
 
 import { dynamoDbClient } from "./db-functions";
 import { handlePutItemError, handleScanError } from "./error-handlers";
-import { IProduct } from './product-data';
+import { loadProducts } from "./insert_products";
+
 import { getProduct, getProductScanParameters } from './product-helper';
 export const getHandler = async (
     event: APIGatewayProxyEvent,
@@ -24,10 +22,10 @@ export const getHandler = async (
                 dynamoDbClient,
                 getProductScanParameters()
             );
-        let outputArray = []
+        let outputArray = [];
 
         if (scanResults?.Items) {
-            for (let item of scanResults?.Items) {
+            for (let item of scanResults.Items) {
                 outputArray.push(getProduct(item));
 
             }
@@ -36,10 +34,12 @@ export const getHandler = async (
         console.log(`outputArray.length : ${outputArray.length}`);
         response = {
             'statusCode': 200,
-            'body': JSON.stringify(outputArray),
             'headers': {
-                "Access-Control-Allow-Origin": "*"
-            }
+                'Access-Control-Allow-Headers': '*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': '*'
+            },
+            'body': JSON.stringify(outputArray),
         }
     } catch (err) {
         console.log(err);
@@ -56,11 +56,39 @@ async function executeScan(dynamoDbClient: AWS.DynamoDB, scanInput: AWS.DynamoDB
         console.info('Scan successful.');
         // Handle scanOutput
         return scanOutput;
-    } catch (err) {
+    } catch (err: any) {
         handleScanError(err);
     }
 }
 
+export const postHandler = async (
+    event: APIGatewayProxyEvent, context: Context
+) => {
+    console.log("Kenji: in product postHandler");
+
+    let response = {};
+    try {       
+
+        await loadProducts();
+
+        console.log("Kenji: successfully put item");
+
+        response = {
+            'statusCode': 200,
+            'body': `Products created`
+        }
+    } catch (err: any) {
+        console.log("Kenji: product post error");
+
+        console.log(err);
+        response = {
+            'statusCode': err.statusCode,
+            'body': `product post error`,
+        }
+    }
+
+    return response;
+};
 
 export const getSingleProductHandler = async (event: APIGatewayProxyEvent, context: Context) => {
     let response = {};
@@ -71,8 +99,6 @@ export const getSingleProductHandler = async (event: APIGatewayProxyEvent, conte
 
         console.log(`event.path : ${event.path}`);
         console.log(`event.pathParameters.productId : ${(<any>event.pathParameters).productId}`);
-
-        // event.queryStringParameters = {"name":"test"}
 
         let scanResults = await executeScan(
             dynamoDbClient,

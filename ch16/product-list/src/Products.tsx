@@ -1,5 +1,3 @@
-
-
 export interface IProduct {
     id: number;
     name: string;
@@ -17,15 +15,6 @@ export interface ISpecs {
 }
 
 export class Collection {
+    items: IProduct[] = [];        
     handleItemClicked(id: number) { }
-    items: IProduct[] = [];
-    //     these manually created items can be deleted
-    //     [
-    //         {
-    //         id: 1,
-    //         name: "Holy Panda",
-    //         type: "Tactile"
-    //         }
-    //     ]
-
 }

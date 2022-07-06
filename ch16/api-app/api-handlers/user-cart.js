@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getHandler = exports.postHandler = void 0;
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
 let response;
 const db_functions_1 = require("./db-functions");
 const product_helper_1 = require("./product-helper");
@@ -12,10 +10,9 @@ const postHandler = async (event, context) => {
     try {
         let bodyJson = JSON.parse(event.body);
         let userId = event.pathParameters.userId;
-        // let username: string = bodyJson.username;
         let items = bodyJson.items;
         console.log(`found items ; ${items.length}`);
-        let isUser = await users_1.userExists(userId);
+        let isUser = await (0, users_1.userExists)(userId);
         if (!isUser) {
             response = {
                 'statusCode': 400,
@@ -91,7 +88,6 @@ const postHandler = async (event, context) => {
     }
     catch (err) {
         console.log(err);
-        // return err;
         response = {
             'statusCode': err.statusCode,
             'body': { message: `${err.message} : an item with this id already exists` },
@@ -108,9 +104,7 @@ const getHandler = async (event, context) => {
         let cartArray = [];
         let bodyJson = JSON.parse(event.body);
         let userId = event.pathParameters.userId;
-        // let username: string = bodyJson.username;
-        // let items: IItem[] = bodyJson.items;
-        let isUser = await users_1.userExists(userId);
+        let isUser = await (0, users_1.userExists)(userId);
         if (!isUser) {
             response = {
                 'statusCode': 400,
@@ -142,10 +136,10 @@ const getHandler = async (event, context) => {
                     let amount = existingItem["amount"].N ? existingItem["amount"].N : "0";
                     // let productDetails = 
                     let id = productId ? productId : "0";
-                    let outputProduct = await db_functions_1.dynamoDbClient.scan(product_helper_1.getProductScanParameters(id)).promise();
+                    let outputProduct = await db_functions_1.dynamoDbClient.scan((0, product_helper_1.getProductScanParameters)(id)).promise();
                     if (outputProduct === null || outputProduct === void 0 ? void 0 : outputProduct.Items) {
                         for (let item of outputProduct === null || outputProduct === void 0 ? void 0 : outputProduct.Items) {
-                            let cartProduct = product_helper_1.getProduct(item);
+                            let cartProduct = (0, product_helper_1.getProduct)(item);
                             cartProduct.amount = parseInt(amount);
                             cartArray.push(cartProduct);
                         }

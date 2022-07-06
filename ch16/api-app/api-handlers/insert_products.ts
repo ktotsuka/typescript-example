@@ -2,10 +2,7 @@ import { dynamoDbClient } from "./db-functions";
 import { handlePutItemError } from "./error-handlers";
 import { items } from "./product-data";
 
-
-loadProducts();
-
-async function loadProducts() {
+export async function loadProducts() {
     for (let product of items) {
         let putItemInput = createPutItemInput(
             product.id.toString(),
@@ -23,7 +20,6 @@ async function loadProducts() {
         let result = await executePutItem(dynamoDbClient, putItemInput);
     }
 }
-
 
 function createPutItemInput(
     id: string,
@@ -80,7 +76,7 @@ async function executePutItem(dynamoDbClient: AWS.DynamoDB, putItemInput: AWS.Dy
         const putItemOutput = await dynamoDbClient.putItem(putItemInput).promise();
         console.info('Successfully put item.');
         // Handle putItemOutput
-    } catch (err) {
+    } catch (err: any) {
         handlePutItemError(err);
     }
 }

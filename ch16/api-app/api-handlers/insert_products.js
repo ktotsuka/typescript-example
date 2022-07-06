@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.loadProducts = void 0;
 const db_functions_1 = require("./db-functions");
 const error_handlers_1 = require("./error-handlers");
 const product_data_1 = require("./product-data");
-loadProducts();
 async function loadProducts() {
     var _a, _b, _c, _d, _e;
     for (let product of product_data_1.items) {
@@ -11,6 +11,7 @@ async function loadProducts() {
         let result = await executePutItem(db_functions_1.dynamoDbClient, putItemInput);
     }
 }
+exports.loadProducts = loadProducts;
 function createPutItemInput(id, name, type, image, longDescription, actuationForce, actuationPoint, bottomOut, bottomOutTravel, price) {
     return {
         "TableName": "ProductTable",
@@ -56,6 +57,6 @@ async function executePutItem(dynamoDbClient, putItemInput) {
         // Handle putItemOutput
     }
     catch (err) {
-        error_handlers_1.handlePutItemError(err);
+        (0, error_handlers_1.handlePutItemError)(err);
     }
 }

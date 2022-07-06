@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-
     <table class="table table-sm">
         <thead class="thead-dark">
             <tr>
@@ -32,11 +31,8 @@
                 <th scope="col" colspan="5">Invoice Total</th>
                 <th scope="col" class="right-aligned-text">{{ total }}</th>
             </tr>
-
         </tbody>
-
     </table>
-
   </div>
 </template>
 
@@ -55,6 +51,7 @@ import ItemTotalView from "./ItemTotalView.vue";
     },
     computed: {
         itemTotal() {
+            console.log(`compouted total() : ${this.totalValue()}`);
             return this.displayValue(this.totalValue());
         },
         tax() {
@@ -74,7 +71,6 @@ export default class CheckoutView extends Vue {
     basket!: CartCollection;
     data() {
         return {
-            basket: this.basket,
         };
     }
 totalValue() {

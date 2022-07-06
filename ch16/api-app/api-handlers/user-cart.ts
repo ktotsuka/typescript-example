@@ -1,5 +1,3 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
 let response;
 import {
     APIGatewayProxyEvent,
@@ -19,12 +17,8 @@ interface IItem {
 export const postHandler = async (event: APIGatewayProxyEvent, context: Context) => {
     let response = {};
     try {
-
         let bodyJson = JSON.parse(<string>event.body);
         let userId = (<any>event.pathParameters).userId;
-
-        // let username: string = bodyJson.username;
-
         let items: IItem[] = bodyJson.items;
         console.log(`found items ; ${items.length}`);
 
@@ -38,7 +32,6 @@ export const postHandler = async (event: APIGatewayProxyEvent, context: Context)
                 }
             }
         } else {
-
             // check if we need to delete any items
             const scanOutput = await dynamoDbClient.scan({
                 "TableName": "UserCartTable",
@@ -105,9 +98,8 @@ export const postHandler = async (event: APIGatewayProxyEvent, context: Context)
                 "Access-Control-Allow-Origin": "*"
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
-        // return err;
         response = {
             'statusCode': err.statusCode,
             'body': { message: `${err.message} : an item with this id already exists` },
@@ -122,17 +114,11 @@ export const postHandler = async (event: APIGatewayProxyEvent, context: Context)
 
 export const getHandler = async (event: APIGatewayProxyEvent, context: Context) => {
     try {
-
         let cartArray = [];
-
         let bodyJson = JSON.parse(<string>event.body);
         let userId = (<any>event.pathParameters).userId;
-
-        // let username: string = bodyJson.username;
-
-        // let items: IItem[] = bodyJson.items;
-
         let isUser = await userExists(userId);
+
         if (!isUser) {
             response = {
                 'statusCode': 400,
@@ -142,7 +128,6 @@ export const getHandler = async (event: APIGatewayProxyEvent, context: Context) 
                 }
             }
         } else {
-
             // fetch all productId's in table for this user
             const scanOutput = await dynamoDbClient.scan({
                 "TableName": "UserCartTable",
@@ -189,7 +174,7 @@ export const getHandler = async (event: APIGatewayProxyEvent, context: Context) 
                 "Access-Control-Allow-Origin": "*"
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         // return err;
         response = {

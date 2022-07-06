@@ -1,45 +1,44 @@
 <template>
     <div class="container">
-        <div 
-            v-if="!isCheckingOut"
-        >
-                &nbsp;
-        <hr/>
-        <div 
-            v-bind:key="item.id" 
-            v-for="item in collection.items"
-        >
-            <ItemView 
-                :item="item" 
-                @on-remove="onItemRemoved"
-            ></ItemView>
-        </div>
-        <button 
-            class="btn btn-secondary" 
-            v-on:click="updateCart()"
-        >Update Cart</button>&nbsp;
-        <button 
-            class="btn btn-primary" 
-            v-on:click="checkout()"
-        >Checkout</button>
+        <div v-if="!isCheckingOut">
+            &nbsp;
+            <h2>Shopping Cart</h2>
+            <hr/>
+            <div v-bind:key="item.id" 
+                 v-for="item in collection.items">
+                <ItemView :item="item" 
+                          @on-remove="onItemRemoved">
+                </ItemView>
+            </div>
+            <button 
+                class="btn btn-primary" 
+                v-on:click="checkout">
+                Checkout
+            </button>
         </div>
         <div v-if="isCheckingOut">
-                &nbsp;
-        <h2>Check Out</h2>
-        <hr/>
-        <CheckoutView 
-            :basket="collection"
-        ></CheckoutView>
-                <button 
-            class="btn btn-secondary" v-on:click="continueShopping()"
-        >Continue Shopping</button>&nbsp;
-        <button 
-            class="btn btn-primary"
-            v-on:click="placeOrder()"
-        >Place Order</button>
+            &nbsp;
+            <h2>Check Out</h2>
+            <hr/>
+            <CheckoutView :basket="collection">
+            </CheckoutView>
+            <button 
+                class="btn btn-secondary" 
+                v-on:click="back()">
+                Back
+            </button>
+            &nbsp;
+            <button class="btn btn-primary"
+                    v-on:click="continueShopping()">
+                    Continue Shopping
+            </button>
+            &nbsp;
+            <button 
+                class="btn btn-primary"
+                v-on:click="placeOrder()">
+                Place Order
+            </button>
         </div>
-        <hr/>
-
     </div>
 </template>
 
@@ -64,7 +63,7 @@ export default class ShoppingCart extends Vue {
     isCheckingOut!: boolean;
     data() {
         return {
-            collection: this.collection,
+            //collection: this.collection,
             isCheckingOut: false,
         };
     }
@@ -76,14 +75,16 @@ export default class ShoppingCart extends Vue {
             );
         this.collection.items.splice(index, 1);
     }
+
     checkout() {
         this.isCheckingOut = true;
         microEventBus.broadcast('checking-out', null);
     }
+
     back() {
         this.isCheckingOut = false;
     }
-        
+
     continueShopping() {
         this.isCheckingOut = false;
         console.log(`VUE : continueShopping()`);
@@ -92,12 +93,7 @@ export default class ShoppingCart extends Vue {
 
     placeOrder() {
         console.log(`VUE : placeOrder()`);
-         microEventBus.broadcast('place-order', null);
-    }
-
-        updateCart() {
-        console.log(`updating cart`);
-        this.$emit("onUpdateCart");
+        microEventBus.broadcast('place-order', null);
     }
 }
 </script>

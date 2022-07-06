@@ -3,7 +3,7 @@ import { TransitionProps } from "@material-ui/core/transitions/transition";
 import { Close } from "@material-ui/icons";
 import React from "react";
 import { IProduct } from "./Products";
-import "./DetailView.css";
+import "./DetailView.css"
 import { microEventBus } from "./App";
 
 export interface IDetailsProps {
@@ -11,6 +11,7 @@ export interface IDetailsProps {
     product: IProduct | null;
     handleClose(): void;
     username: string;
+    children: React.ReactNode;
 }
 
 export interface IDetailsState {
@@ -58,9 +59,9 @@ export class DetailView extends React.Component<IDetailsProps, IDetailsState> {
                         <Paper className="details-paper-body">
                             <Grid container spacing={5}>
                                 <Grid item>
-                                    <img className="large-image" src={this.props.product?.image} />
+                                    <img className="large-image" alt="" src={this.props.product?.image} />
                                 </Grid>
-                                <Grid item xs container direction="column" justify="flex-start" align-items="stretch" >
+                                <Grid item xs container direction="column" justifyContent="flex-start" align-items="stretch" >
                                     <Grid item >
                                         <h1>{this.props.product?.name}</h1>
                                     </Grid>
@@ -147,7 +148,7 @@ export class DetailView extends React.Component<IDetailsProps, IDetailsState> {
     }
 
     onSubmit(e: React.FormEvent) {
-        console.log(`submit ; ${this.state.noSwitches}`);
+        console.log(`submit : ${this.state.noSwitches}`);
         e.preventDefault();
 
         if (this.props.product) {

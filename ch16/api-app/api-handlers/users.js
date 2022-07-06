@@ -1,75 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerHandler = exports.getHandler = exports.userExists = exports.postHandler = void 0;
+exports.getHandler = exports.userExists = exports.postHandler = void 0;
 const db_functions_1 = require("./db-functions");
-//
-// POST should handle a user logging in
-//
 const postHandler = async (event, context) => {
-    var _a;
+    console.log("Kenji: in postHandler");
     let response = {};
     try {
         let bodyJson = JSON.parse(event.body);
         let username = bodyJson.username;
         let password = bodyJson.password;
-        console.log(`username: |username|`);
-        const scanOutput = await db_functions_1.dynamoDbClient.scan({
+        console.log("Kenji: username: " + username + ", password: " + password);
+        await db_functions_1.dynamoDbClient.putItem({
             "TableName": "UserTable",
-            "ConsistentRead": true,
-            "FilterExpression": "#87ea0 = :87ea0",
-            "ExpressionAttributeValues": {
-                ":87ea0": {
-                    "S": `${username}`
+            "Item": {
+                "username": {
+                    "S": username
+                },
+                "password": {
+                    "S": password
                 }
             },
+            "ConditionExpression": "attribute_not_exists(#2d140)",
             "ExpressionAttributeNames": {
-                "#87ea0": "username"
+                "#2d140": "username"
             }
         }).promise();
-        // console.log(`found user`);
-        // return {
-        //     "statusCode": 200,
-        //     "body": scanOutput
-        // }
-        if (scanOutput.Items && ((_a = scanOutput.Items) === null || _a === void 0 ? void 0 : _a.length) > 0) {
-            let userRecord = scanOutput.Items[0];
-            console.log(`checkign vs ${userRecord["password"].S}`);
-            if (password === userRecord["password"].S) {
-                response = {
-                    'statusCode': 200,
-                    'body': {},
-                    'headers': {
-                        "Access-Control-Allow-Origin": "*"
-                    }
-                };
-            }
-            else {
-                response = {
-                    'statusCode': 401,
-                    'body': { "message": `Username password combination invalid` },
-                    'headers': {
-                        "Access-Control-Allow-Origin": "*"
-                    }
-                };
-            }
-        }
-        else {
-            console.log(`scanOutput.length < 0`);
-            response = {
-                'statusCode': 401,
-                'body': { "message": `Username password combination invalid` },
-                'headers': {
-                    "Access-Control-Allow-Origin": "*"
-                }
-            };
-        }
+        console.log("Kenji: successfully put item");
+        response = {
+            'statusCode': 200,
+            'body': `User created`
+        };
     }
     catch (err) {
+        console.log("Kenji: user post error");
         console.log(err);
-        // return err;
         response = {
             'statusCode': err.statusCode,
-            'body': { 'message': `${err.message} : an item with this id already exists` }
+            'body': `${err.message} : an item with this id already exists`,
         };
     }
     return response;
@@ -80,14 +47,14 @@ async function userExists(username) {
     const scanOutput = await db_functions_1.dynamoDbClient.scan({
         "TableName": "UserTable",
         "ConsistentRead": false,
-        "FilterExpression": "#87ea0 = :87ea0",
+        "FilterExpression": "#249b0 = :249b0",
         "ExpressionAttributeValues": {
-            ":87ea0": {
+            ":249b0": {
                 "S": `${username}`
             }
         },
         "ExpressionAttributeNames": {
-            "#87ea0": "username"
+            "#249b0": "username"
         }
     }).promise();
     if (scanOutput.Items && ((_a = scanOutput.Items) === null || _a === void 0 ? void 0 : _a.length) > 0) {
@@ -118,7 +85,6 @@ const getHandler = async (event, context) => {
     }
     catch (err) {
         console.log(err);
-        // return err;
         response = {
             'statusCode': err.statusCode,
             'body': `${err.message} : an item with this id already exists`
@@ -127,49 +93,3 @@ const getHandler = async (event, context) => {
     return response;
 };
 exports.getHandler = getHandler;
-//
-// POST should handle a user logging in
-//
-const registerHandler = async (event, context) => {
-    let response = {};
-    try {
-        let bodyJson = JSON.parse(event.body);
-        let username = bodyJson.username;
-        let password = bodyJson.password;
-        await db_functions_1.dynamoDbClient.putItem({
-            "TableName": "UserTable",
-            "Item": {
-                "username": {
-                    "S": `${username}`
-                },
-                "password": {
-                    "S": `${password}`
-                }
-            },
-            "ConditionExpression": "attribute_not_exists(#3f9c0)",
-            "ExpressionAttributeNames": {
-                "#3f9c0": "username"
-            }
-        }).promise();
-        response = {
-            'statusCode': 200,
-            'body': {},
-            'headers': {
-                "Access-Control-Allow-Origin": "*"
-            }
-        };
-    }
-    catch (err) {
-        console.log(err);
-        // return err;
-        response = {
-            'statusCode': err.statusCode,
-            'body': `${err.message} : an item with this id already exists`,
-            'headers': {
-                "Access-Control-Allow-Origin": "*"
-            }
-        };
-    }
-    return response;
-};
-exports.registerHandler = registerHandler;

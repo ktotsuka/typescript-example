@@ -33,14 +33,13 @@ export default class HelloWorld extends Vue {
     myText!:string;
     data() {
         return {
-            myText: this.msg 
+             myText: this.msg 
         }
     }
     clicked() {
         console.log(`this.myText = ${this.myText}`);
         this.$emit("onSubmitClicked", this.myText);
     }
-
 }
 </script>
 

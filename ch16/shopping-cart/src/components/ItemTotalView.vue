@@ -16,7 +16,6 @@
     </td>
 </template>
 
-
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { IProduct } from "../CartItems";
@@ -38,7 +37,6 @@ export default class ItemTotalView extends Vue {
     item!: IProduct;
     data() {
         return {
-        item: this.item,
         };
     }
 }
